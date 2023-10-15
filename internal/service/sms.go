@@ -21,7 +21,6 @@ type SendCodeResponseBody struct {
 }
 
 func (s *Server) SendCode(ctx context.Context, req *pb.SendCodeRequest) (*pb.SendCodeResponse, error) {
-	fmt.Println("Дошли до сюда")
 	code := utils.GenerateCode()
 	url := fmt.Sprintf("https://smsgateway24.com/getdata/addsms?token=%s&sendto=%s&body=%s&device_id=11173", s.ApiToken, req.PhoneNumber, code)
 	response, err := s.RestClient.R().Get(url)
@@ -50,6 +49,7 @@ func (s *Server) SendCode(ctx context.Context, req *pb.SendCodeRequest) (*pb.Sen
 			Code:   "",
 		}, nil
 	}
+	fmt.Println(b)
 
 	if b.Error == 1 {
 		return &pb.SendCodeResponse{
